@@ -20,7 +20,7 @@ const Sponsoren = () => {
 
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                     {sponsoren.map((sponsor, index) => (
-                        <div key={index} className="w-full my-4 flex flex-col justify-center items-center">1
+                        <div key={index} className="w-full my-4 flex flex-col justify-center items-center">
                                 <Card className="py-4 sm:w-60 mx-6 ">
                                     <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                                         <p className="text-base uppercase font-bold">{sponsor.name}</p>

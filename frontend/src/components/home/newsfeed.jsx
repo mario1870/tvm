@@ -2,45 +2,40 @@ import { useState, useEffect, useRef } from "react"
 import {Card, CardHeader, CardBody, CardFooter, Divider, Link, Image} from "@nextui-org/react";
 import {ScrollShadow} from "@nextui-org/react";
 import { useInView, motion } from "framer-motion";
-
-
-function Section({ children }) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
-  
-    return (
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
-          variants={{
-            visible: { opacity: 1, scale: 1, x:0 },
-            hidden: { opacity: 0, scale: 0.5, x: -200 }
-          }}
-        >
-          {children}
-        </motion.div>
-      );
-  }
+import FadeInWhenVisible from "../../animationSections/fadeInWhenVisible";
 
 const Newsfeed = () => {
 
-    const aktuelles = [
-        {uberschrift: "Überschrifdt", text: "Lorem Ipsudm", bild: "/news/yoga.jpg", datum: "12 Okt. 2023", text: "Lorem ipsum dolor sdit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."},
-        {uberschrift: "Überschrift 22", text: "Lorem Idpsum", bild: "/news/sgm.jpg", datum: "10 Sept. 2023", text: "Lorem ipsum dolosr sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."},
-        {uberschrift: "Überschrift 22d", text: "Loremd Ipsum", bild: "/news/shakeit.jpg", datum: "12 Okt. 2023", text: "Lorem ipsum dolosr sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."},
-        {uberschrift: "Überschrift fg", text: "Lorem Ipsufm", bild: "/news/vfbcamp.jpg", datum: "12 Okt. 2023", text: "Lorem ipsum dolor dssit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."},
-        {uberschrift: "Überschriftf", text: "Lorem Ipsumf", bild: "/news/weihnachtsfeier.png", datum: "12 Okt. 2023", text: "Lorem ipsudm dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."}
-      ]
+  const [newsfeedDaten, setNewsfeedDaten] = useState([]);
 
-      const ref = useRef(null)
-      const isInView = useInView(ref)
+  useEffect(() => {
+      // Funktion zum Abrufen von Daten
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/newsfeed/');
+          
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+  
+          const data = await response.json();
+          setNewsfeedDaten(data);
+        } catch (error) {
+          console.error('Error fetching data:', error.message);
+        }
+      };
+  
+      // Daten beim Mounten der Komponente abrufen
+      fetchData();
+    }, []);
+
+  const ref = useRef(null)
+  const isInView = useInView(ref)
       
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-8">
-            {aktuelles.map((container, index) => (
-            <Section>
+            {newsfeedDaten.map((container, index) => (
+            <FadeInWhenVisible>
                 <Card className="p-4 w-full lg:h-80 flex flex-col lg:flex-row " key={index} >
 
                 <CardHeader className="h-auto lg:h-full w-full lg:w-auto">
@@ -57,7 +52,7 @@ const Newsfeed = () => {
                     </ScrollShadow>
                 </CardBody>
                 </Card>
-            </Section>
+            </FadeInWhenVisible>
             ))}
         </div>
     )

@@ -1,38 +1,12 @@
 import {Card, CardFooter, Image, Button} from "@nextui-org/react";
-import { useInView, motion } from "framer-motion";
-import { useRef } from "react";
-
-
-function Section({ children }) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
-  
-    return (
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
-          variants={{
-            visible: { opacity: 1, scale: 1 },
-            hidden: { opacity: 0, scale: 0 }
-          }}
-        >
-          {children}
-        </motion.div>
-      );
-  }
+import FadeInWhenVisible from "../../animationSections/fadeInWhenVisible";
 
 const SpielerCard = (props) => {
     return(
-        <Section>
-            <Card
-            isFooterBlurred
-            radius="lg"
-            className="border-none w-40 flex items-center"
-            >
+        <FadeInWhenVisible>
+            <Card isFooterBlurred radius="lg" className="border-none w-40 flex items-center">
                 <Image
-                    alt="Woman listing to music"
+                    alt={props.name}
                     className="object-cover"
                     height={250}
                     src={props.img}
@@ -43,7 +17,7 @@ const SpielerCard = (props) => {
                     <p className="text-sm text-center text-white/90">{props.name}</p>
                 </CardFooter>
             </Card>
-        </Section>
+        </FadeInWhenVisible>
     )
 }
 

@@ -1,30 +1,43 @@
-import express from "express"
-import { PORT, mongoDB_URL } from "./config.js"
-import mongoose from "mongoose";
-import booksRoute from "./routes/booksRoutes.js"
-import cors from "cors"
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';// Füge path hinzu
+import mongoose from 'mongoose';
+
+dotenv.config();
 
 const app = express();
 
-app.use(express.json())
-
+// Middleware
 app.use(cors());
+app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-    console.log("SALAM")
-    return res.status(200).send("POGGERZZZ")
-})
+//routes
+import ergebnisse from './routes/ergebnisse.js';
+app.use('/ergebnisse', ergebnisse);
 
-app.use("/books", booksRoute)
+import aktive from './routes/aktive.js';
+app.use('/aktive', aktive);
 
-mongoose
-    .connect(mongoDB_URL)
-    .then(() => {
-        console.log("App connected to database")
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        })
-    })
-    .catch((err) => {
-        console.error(err)
-    })
+import newsfeed from './routes/newsfeed.js';
+app.use('/newsfeed', newsfeed);
+
+import bookSportheim from './routes/bookSportheim.js';
+app.use('/bookSportheim', bookSportheim);
+
+
+// connection to MongoDB
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, dbName: 'TVM' });
+mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+mongoose.connection.on('error', (error) => {
+  console.log(
+    `1. 🔥 Common Error caused issue → : check your .env file first and add your mongodb url`
+  );
+  console.error(`2. 🚫 Error → : ${error.message}`);
+});
+
+// Start des Servers
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
