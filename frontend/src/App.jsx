@@ -9,6 +9,8 @@ import Sportheim from "./pages/Sportheim";
 import Veranstaltungen from "./pages/Veranstaltungen";
 import Jugend from "./pages/Jugend"
 import Yoga from "./pages/yoga";
+import Admin from "./pages/admin";
+import Impressum from "./pages/impressum";
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/sportheim" element={<Sportheim />} />
         <Route path="/veranstaltungen" element={<Veranstaltungen />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/impressum" element={<Impressum />} />
       </Routes>
       </div>
     </>

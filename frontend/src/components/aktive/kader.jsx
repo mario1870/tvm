@@ -1,5 +1,6 @@
 import SpielerCard from "./SpielerCard"
 import React, { useState, useEffect } from 'react';
+import { MY_URL } from "../../config";
 
 const Kader = () => {
 
@@ -9,7 +10,7 @@ const Kader = () => {
         // Funktion zum Abrufen von Daten
         const fetchData = async () => {
           try {
-            const response = await fetch('http://localhost:5000/aktive/');
+            const response = await fetch(`${MY_URL}/aktive/`);
             
             if (!response.ok) {
               throw new Error('Network response was not ok');

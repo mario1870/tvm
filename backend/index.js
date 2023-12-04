@@ -19,6 +19,9 @@ app.use('/ergebnisse', ergebnisse);
 import aktive from './routes/aktive.js';
 app.use('/aktive', aktive);
 
+import jugend from './routes/jugend.js';
+app.use('/jugend', jugend);
+
 import newsfeed from './routes/newsfeed.js';
 app.use('/newsfeed', newsfeed);
 

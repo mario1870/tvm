@@ -5,6 +5,7 @@ import {Button, ButtonGroup} from "@nextui-org/react";
 import { IoIosSend } from "react-icons/io";
 import { motion } from 'framer-motion';
 import { FaCheck } from "react-icons/fa";
+import { MY_URL } from '../config';
 
 const Sportheim = () => {
 
@@ -25,7 +26,7 @@ const Sportheim = () => {
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await fetch('http://localhost:5000/bookSportheim/', {
+          const response = await fetch(`${MY_URL}/bookSportheim/`, {
             method: 'POST', // Anpassen je nach API-Anforderung
             headers: {
               'Content-Type': 'application/json',

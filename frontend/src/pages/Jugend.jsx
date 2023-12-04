@@ -1,27 +1,53 @@
-import {Divider} from "@nextui-org/react";
-import { motion } from "framer-motion";
+
 import FadeInWhenVisible from "../animationSections/fadeInWhenVisible";
+import { useEffect, useState } from "react";
+import { MY_URL } from "../config";
 
 const Jugend = () => {
+    
+    const [jugendDaten, setJugendDaten] = useState([]);
 
-    const jugend = [
-        {alter: "A-Jugend", bild: "/jugend/suschwas.jpg", fussballde: "https://www.fussball.de/mannschaft/sgm-killertal-alb-zollern-fc-killertal-04-wuerttemberg/-/saison/2324/team-id/02F3K1K928000000VS5489B1VVS28625#!/"},
-        {alter: "B-Jugend", bild: "/jugend/suschwas.jpg", fussballde: "https://www.fussball.de/mannschaft/sgm-stetten-salm-alb-zollern-fc-stetten-salmendingen-wuerttemberg/-/saison/2324/team-id/02IP636VOG000000VS5489B1VT368TME#!/"},
-        {alter: "C-Jugend", bild: "/jugend/suschwas.jpg", fussballde: "https://www.fussball.de/mannschaft/sgm-melchingen-alb-zollern-tv-melchingen-wuerttemberg/-/saison/2324/team-id/02F5SMVLOC000000VS5489B1VVS28625#!/"},
-        {alter: "D-Jugend", bild: "/jugend/suschwas.jpg", fussballde: "https://www.fussball.de/mannschaft/sgm-ringingen-alb-zollern-sv-ringingen-wuerttemberg/-/saison/2324/team-id/02LQATIJ4G000000VS5489B1VVVHS1D7#!/"},
-        {alter: "E-Jugend", bild: "/jugend/suschwas.jpg", fussballde: "https://www.fussball.de/mannschaft/fc-stetten-salmendingen-fc-stetten-salmendingen-wuerttemberg/-/saison/2324/team-id/02M4VGMQ2K000000VS5489B1VVVHS1D7#!/"}
-    ]
+    useEffect(() => {
+        // Funktion zum Abrufen von Daten
+        const fetchData = async () => {
+            try {
+            const response = await fetch(`${MY_URL}jugend/`);
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            const data = await response.json();
+            setJugendDaten(data);
+            } catch (error) {
+            console.error('Error fetching data:', error.message);
+            }
+        };
+    
+        // Daten beim Mounten der Komponente abrufen
+        fetchData();
+    }, []);
 
     return (
         <>
             <div className="pt-20">
                 <div className="grid grid-cols-1 xl:grid-cols-2 w-full px-10 xl:px-20">
-                    {jugend.map((constainer, index) => (
+                    {jugendDaten.map((constainer, index) => (
                         <FadeInWhenVisible key={index}>
                             <div className="flex flex-col justify-center items-center border-b-2 pb-4 border-blue-500">
                                 <h1 className="text-4xl py-6">{constainer.alter}</h1>
-                                <img src={constainer.bild} alt="" />
-                                <p className="text-xl py-3">Jetzt aktuelle Ergebnisse checken unter: <a href={constainer.fussballde} className="text-black underline">Fussball.de</a></p>
+                                <img className="w-full md:px-20" src={constainer.bild} alt="" />
+                                <div className="flex gap-2 my-2">
+                                    <p className="font-bold">Training: </p>
+                                    <p>{constainer.trainingszeiten}</p>
+                                </div>
+                                <div className="flex gap-2 my-2">
+                                    <p className="font-bold">Trainer:</p>
+                                    <p>{constainer.trainer}</p> 
+
+                                </div>
+                                
+                                <p className="text-xl py-3 text-center">Jetzt aktuelle Ergebnisse checken unter: <a href={constainer.fussballde} className="text-black underline">Fussball.de</a></p>
                             </div>
                         </FadeInWhenVisible>
                     ))}

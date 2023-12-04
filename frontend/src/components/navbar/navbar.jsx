@@ -12,7 +12,7 @@ const navbarData = [
   {link: "/jugend", titel: "Jugend"},
   {link: "/yoga", titel: "Yoga"},
   {link: "/Gymnastik", titel: "Gymnastik"},
-  {link: "/Kindertunen", titel: "Kindertunen"},
+  {link: "/Kinderturnen", titel: "Kindertunen"},
   {link: "/Sportheim", titel: "Sportheim"},
   {link: "/Veranstaltungen", titel: "Veranstaltungen"},
   {link: "/Sponsoren", titel: "Sponsoren"},

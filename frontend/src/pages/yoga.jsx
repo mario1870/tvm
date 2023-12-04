@@ -7,7 +7,7 @@ const Yoga = () => {
         <>
             <div className="pt-20 md:pt-20 pb-8 min-h-screen px-2 lg:px-40 ">
 
-                <div className="flex flex-col lg:flex-row bg-green-300 my-10 rounded-3xl">
+                <div className="flex flex-col lg:flex-row bg-blue-300 my-10 rounded-3xl">
                     <span className="md:min-h-full flex items-center justify-center">
                         <img className="rounded-3xl" src="/yoga/yoga.jpg" />                    
                     </span>
